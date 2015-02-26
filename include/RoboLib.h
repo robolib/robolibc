@@ -24,7 +24,7 @@
     int main() { \
         if(!HALInitialize()){std::cerr<<"Could not Initialize HAL!"<<std::endl; return -1;} \
         _ClassName_ *robot = new _ClassName_(); \
-        RoboLib::robotSetup(robot); \
+        RoboLib::runBot(robot); \
         return 0; \
     }
 
@@ -37,8 +37,7 @@ public:
     static void startRobotTask(FUNCPTR factory);
     static void robotTask(FUNCPTR factory, Task *task);
     virtual void run() = 0;
-
-    static void robotSetup(RoboLib *robot);
+    static void runBot(RoboLib *robot);
 
 protected:
     virtual ~RoboLib();

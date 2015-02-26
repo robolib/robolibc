@@ -31,7 +31,10 @@ public:
 
     virtual ~Task();
 
-    bool start(uint32_t arg0 = 0, uint32_t arg1 = 0, uint32_t arg2 = 0);
+    bool start(uint32_t arg0 = 0, uint32_t arg1 = 0, uint32_t arg2 = 0,
+            uint32_t arg3 = 0, uint32_t arg4 = 0, uint32_t arg5 = 0,
+            uint32_t arg6 = 0, uint32_t arg7 = 0, uint32_t arg8 = 0,
+            uint32_t arg9 = 0);
     bool restart();
     bool stop();
     bool isReady();

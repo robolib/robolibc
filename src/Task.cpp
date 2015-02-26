@@ -34,6 +34,39 @@ Task::Task(const char* name, FUNCPTR function, int32_t priority, uint32_t stackS
 
 }
 
+bool Task::start(uint32_t arg0, uint32_t arg1, uint32_t arg2, uint32_t arg3,
+        uint32_t arg4, uint32_t arg5, uint32_t arg6, uint32_t arg7,
+        uint32_t arg8, uint32_t arg9){
+
+    m_taskId = spawnTask(m_taskName, m_priority,
+                         VXWORKS_FP_TASK, m_stackSize,
+                         m_function, arg0, arg1, arg2, arg3,
+                         arg4, arg5, arg6, arg7, arg8, arg9);
+
+    if(m_taskId  == NULL_TASK){
+        //handleerror(error);
+        return false;
+    }
+    return true;
+
+}
+
+bool Task::restart(){
+    return restartTask(m_taskId);
+}
+
+bool Task::stop(){
+    bool ok = true;
+    if(verify()){
+        ok = deleteTask(m_taskId);
+    }
+
+    m_taskId = NULL_TASK;
+
+    return ok;
+}
+
+
 Task::~Task(){
     if(m_taskId != NULL_TASK) stop();
     delete[] m_taskName;

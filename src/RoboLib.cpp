@@ -19,14 +19,52 @@
 
 #include "RoboLib.h"
 #include "DriverStation.h"
+#include "HAL/HAL.hpp"
 
 class DriverStation;
 
-RoboLib::RoboLib() {
-	// TODO Auto-generated constructor stub
+RoboLib* RoboLib::m_instance = NULL;
+
+RoboLib::RoboLib()
+    : m_task(NULL) {
+    RoboLib::setInstance(this);
+
+    FILE *file = NULL;
+    file = fopen("/tmp/frc_versions/FRC_Lib_Version.ini", "w");
+
+    fputs("RoboLibC 0.0.1", file);
+    if(file != NULL)
+        fclose(file);
 
 }
 
 RoboLib::~RoboLib() {
-	// TODO Auto-generated destructor stub
+    delete m_task;
+    m_task = NULL;
+    m_instance = NULL;
+}
+
+void RoboLib::setInstance(RoboLib* robot){
+    m_instance = robot;
+}
+
+RoboLib &RoboLib::getInstance(){
+    return *m_instance;
+}
+
+void RoboLib::runBot(RoboLib *robot){
+    robot->run();
+}
+
+void RoboLib::run(){
+
+
+    robotInit();
+
+    HALNetworkCommunicationObserveUserProgramStarting();
+
+    while(true){
+        
+    }
+
 }
