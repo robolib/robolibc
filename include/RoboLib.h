@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2015 Westwood Robotics <code.westwoodrobotics@gmail.com>
  * Copyright (c) 2015 Austin Reuland <amreuland@gmail.com>
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -19,12 +18,13 @@
 
 #include "Base.h"
 #include "Task.h"
+#include "RobotMode.h"
 
 #define START_ROBOT_CLASS(_ClassName_) \
     int main() { \
-        if(!HALInitialize()){std::cerr<<"Could not Initialize HAL!"<<std::endl; return -1;} \
+        if(!HALInitialize()){std::cerr << "Could not Initialize HAL!" << std::endl; return -1;} \
         _ClassName_ *robot = new _ClassName_(); \
-        RoboLib::runBot(robot); \
+        RoboLib::run(); \
         return 0; \
     }
 
@@ -36,8 +36,10 @@ public:
 
     static void startRobotTask(FUNCPTR factory);
     static void robotTask(FUNCPTR factory, Task *task);
-    virtual void run() = 0;
+    static void run();
     static void runBot(RoboLib *robot);
+
+    static void setRobotMode(GameMode *)
 
 protected:
     virtual ~RoboLib();
@@ -47,8 +49,13 @@ protected:
 
     Task *m_task;
 
+
 private:
     static RoboLib *m_instance;
+
+    static RobotMode m_modes[4];
+
+    static GameMode m_currentMode;
 
     DISALLOW_COPY_AND_ASSIGN(RoboLib);
 };

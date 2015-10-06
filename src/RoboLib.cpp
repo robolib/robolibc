@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2015 Westwood Robotics <code.westwoodrobotics@gmail.com>
  * Copyright (c) 2015 Austin Reuland <amreuland@gmail.com>
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -59,12 +58,22 @@ void RoboLib::runBot(RoboLib *robot){
 void RoboLib::run(){
 
 
-    robotInit();
+    m_instance->robotInit();
 
     HALNetworkCommunicationObserveUserProgramStarting();
 
+    static DriverStation *ds = DriverStation::getInstance();
+    static GameMode gm = GameMode::NONE;
+    m_currentMode = GameMode::NONE;
+
     while(true){
-        
+        ds->waitForData();
+        if(ds->hasModeChanged()){
+            gm = ds->getGameMode();
+            if(gm != m_currentMode){
+
+            }
+        }
     }
 
 }

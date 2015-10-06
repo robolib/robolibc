@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2015 Westwood Robotics <code.westwoodrobotics@gmail.com>
  * Copyright (c) 2015 Austin Reuland <amreuland@gmail.com>
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -21,10 +20,11 @@
 #include <string.h>
 
 #include "Task.h"
+#include "RobotMode.h"
 #include "HAL/HAL.hpp"
 
 class DriverStation {
- public:
+public:
     virtual ~DriverStation();
 
     static DriverStation *getInstance();
@@ -32,6 +32,8 @@ class DriverStation {
     void waitForData();
     bool isNewControlData();
     bool hasModeChanged();
+
+    GameMode getGameMode();
 
     static bool isDisabled();
     static bool isEnabled();
@@ -47,11 +49,11 @@ class DriverStation {
 
     static void reportError(std::string error);
 
- protected:
+protected:
     DriverStation();
 
 
- private:
+private:
     static DriverStation *m_instance;
 
     static void initTask(DriverStation *ds);
